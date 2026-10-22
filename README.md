@@ -48,11 +48,21 @@
 
 ## 卡面预览
 
+![麦门幻境图鉴](docs/preview.png)
+
+**每一张卡的立绘都是程序化生成的，不是找来的素材图。** 角色的每个部分都由数据决定：
+
+| 决定因素 | 表现在角色身上 |
+|---|---|
+| 元素（炎/风/水/草/冰/暗/光/雷） | 发色、光环、制服镶边 |
+| 职业（战士/坦克/法师/刺客/牧师/灵体） | 武器 —— 剑 / 盾 / 法杖 / 匕首 / 权杖，灵体半透明 |
+| 品名（汉堡/薯条/饮品/甜品/炸鸡/套餐） | 头上发饰 —— 汉堡夹、薯条夹、饮料杯、冰淇淋、鸡腿、皇冠 |
+| 编号哈希 | 发型（4 种）、表情（4 种）、发色深浅、头带或耳饰 |
+
 | SSR · 风·刺客 | SR · 炎·坦克 | R · 炎·刺客 | N · 水·灵体 |
 |:---:|:---:|:---:|:---:|
-| <img src="https://menu-img.mcd.cn/pcm/prod/menu/20260624/product/MS_9900004066_320.gif" width="120"> | <img src="https://menu-img.mcd.cn/pcm/prod/menu/20260309/product/MS_511781_320.png" width="120"> | <img src="https://menu-img.mcd.cn/pcm/prod/menu/20260309/product/MS_1100_320.png" width="120"> | <img src="https://menu-img.mcd.cn/pcm/prod/menu/20240904/product/MS_3757_320.png" width="120"> |
 | **堡堡随心拼**<br>疾风影刃<br>战力 **4743** | **培根安格斯厚牛堡**<br>炽焰壁垒<br>战力 **2742** | **巨无霸**<br>炽焰影刃<br>战力 **2403** | **纯悦**<br>碧涛残影<br>战力 **5** |
-| ATK 945 · DEF 999<br>HP 999 · CRT 999 | ATK 763 · DEF 720<br>HP 827 · CRT 589 | ATK 699 · DEF 660<br>HP 694 · CRT 572 | ATK 1 · DEF 1<br>HP 1 · CRT 1 |
+| ATK 945 · DEF 999<br>HP 999 · CRT 999 | ATK 543 · DEF 596<br>HP 662 · CRT 474 | ATK 455 · DEF 525<br>HP 496 · CRT 454 | ATK 1 · DEF 1<br>HP 1 · CRT 1 |
 
 ---
 

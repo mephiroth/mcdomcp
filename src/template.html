@@ -8,15 +8,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0e1014; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
-  --text:#e8eaf0; --muted:#8b93a7; --gold:#e8b64c; --purple:#9d7ae0;
-  --blue:#4a8fe0; --gray:#6b7280;
+  --text:#e8eaf0; --muted:#8b93a7;
 }
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
   line-height:1.5;-webkit-font-smoothing:antialiased}
-a{color:inherit}
 .wrap{max-width:1280px;margin:0 auto;padding:0 20px 80px}
 
-header{padding:44px 0 26px;text-align:center;position:relative}
+header{padding:44px 0 26px;text-align:center}
 h1{font-size:30px;font-weight:700;letter-spacing:2px}
 h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .sub{color:var(--muted);font-size:13px;margin-top:8px}
@@ -43,29 +41,29 @@ h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-cli
 .btn:active{transform:scale(.97)}
 .btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);font-weight:500}
 .pull-out{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px;min-height:4px}
-.pull-out .mini{width:66px;text-align:center;animation:pop .35s backwards}
-.pull-out .mini img{width:66px;height:66px;object-fit:contain;background:#0a0c10;border-radius:8px;padding:4px}
+.pull-out .mini{width:64px;text-align:center;animation:pop .35s backwards}
+.pull-out .mini svg{width:64px;height:64px;border-radius:8px;background:#0a0c10}
 .pull-out .mini .rn{font-size:10px;margin-top:3px;font-weight:700}
 @keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;
   cursor:pointer;transition:transform .16s,border-color .16s;position:relative}
 .card:hover{transform:translateY(-4px);border-color:#4a5163}
-.card .art{position:relative;height:158px;background:radial-gradient(circle at 50% 42%,#262b36,#12151b);
-  display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .2s}
-.card .art img{width:132px;height:132px;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));
-  transition:transform .2s;position:relative;z-index:1}
-.card:hover .art img{transform:scale(1.06)}
+.card .art{position:relative;height:196px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card .art .stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.card .art svg.hero{width:100%;height:100%;display:block}
+.card .art .photo{width:100%;height:100%;object-fit:contain;padding:14px;display:none}
+.card.show-photo .art .stage{display:none}
+.card.show-photo .art .photo{display:block}
 .card .art::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(to top,#171a21 2%,transparent 42%);z-index:1;pointer-events:none}
-.card .frame{position:absolute;inset:6px;border:1px solid rgba(255,255,255,.07);border-radius:8px;
-  pointer-events:none;z-index:2}
-.stars{position:absolute;bottom:7px;left:9px;font-size:9px;letter-spacing:1px;z-index:3;opacity:.9}
+  background:linear-gradient(to top,#171a21 0%,transparent 36%);z-index:1;pointer-events:none}
 .rb{position:absolute;top:8px;left:8px;font-size:10px;font-weight:800;letter-spacing:.6px;
-  padding:2px 7px;border-radius:5px;z-index:2}
-.eb{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;z-index:2;
-  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+  padding:2px 7px;border-radius:5px;z-index:3}
+.eb{position:absolute;top:8px;right:8px;width:23px;height:23px;border-radius:50%;z-index:3;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.stars{position:absolute;bottom:8px;left:10px;font-size:9px;letter-spacing:1.5px;z-index:3;opacity:.95}
 .card .body{padding:11px 12px 13px;position:relative;z-index:2}
 .nm{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tl{font-size:11px;color:var(--muted);margin-top:2px}
@@ -73,24 +71,26 @@ h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-cli
 .pw .v{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
 .pw .l{font-size:10px;color:var(--muted)}
 
-.card.SSR{border-color:rgba(232,182,76,.42);box-shadow:0 0 0 1px rgba(232,182,76,.14),0 6px 22px -12px rgba(232,182,76,.5)}
-.card.SR{border-color:rgba(157,122,224,.36)}
-.card.R{border-color:rgba(74,143,224,.28)}
+.card.SSR{border-color:rgba(232,182,76,.45);box-shadow:0 0 0 1px rgba(232,182,76,.16),0 6px 24px -12px rgba(232,182,76,.55)}
+.card.SR{border-color:rgba(157,122,224,.38)}
+.card.R{border-color:rgba(74,143,224,.3)}
 .rb.SSR{background:linear-gradient(135deg,#e8b64c,#f6d894);color:#241a00}
 .rb.SR{background:linear-gradient(135deg,#9d7ae0,#c0a5f0);color:#150a2a}
 .rb.R{background:linear-gradient(135deg,#4a8fe0,#7db3f0);color:#04121f}
 .rb.N{background:#3a404d;color:#b9c0cf}
 
-.mask{position:fixed;inset:0;background:rgba(6,7,10,.82);backdrop-filter:blur(6px);
+.mask{position:fixed;inset:0;background:rgba(6,7,10,.84);backdrop-filter:blur(6px);
   display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
 .mask.on{display:flex}
-.modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:760px;width:100%;
-  max-height:92vh;overflow:auto;display:grid;grid-template-columns:250px 1fr}
-.modal .left{background:radial-gradient(circle at 50% 40%,#262b36,#0f1217);padding:26px;display:flex;
-  flex-direction:column;align-items:center;justify-content:center;gap:12px;border-right:1px solid var(--line)}
-.modal .left img{width:190px;height:190px;object-fit:contain;filter:drop-shadow(0 10px 26px rgba(0,0,0,.6))}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:780px;width:100%;
+  max-height:92vh;overflow:auto;display:grid;grid-template-columns:280px 1fr;position:relative}
+.modal .left{padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;border-right:1px solid var(--line)}
+.modal .left svg.hero{width:100%;height:auto;border-radius:12px}
+.modal .left .real{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+.modal .left .real img{width:44px;height:44px;object-fit:contain;background:#0a0c10;border-radius:8px;padding:3px}
 .modal .right{padding:24px 26px 26px}
-.modal h3{font-size:20px;font-weight:700}
+.modal h3{font-size:20px;font-weight:700;padding-right:30px}
 .modal .mt{font-size:12px;color:var(--muted);margin-top:4px}
 .bars{margin:16px 0 14px}
 .bar{display:grid;grid-template-columns:44px 1fr 38px;align-items:center;gap:9px;margin-bottom:7px;font-size:12px}
@@ -104,12 +104,11 @@ h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-cli
 .kv div{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding-bottom:5px}
 .kv .k{color:var(--muted)}
 .kv .v{font-variant-numeric:tabular-nums}
-.close{position:absolute;top:14px;right:18px;background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer}
+.close{position:absolute;top:14px;right:16px;background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer;z-index:5}
 footer{text-align:center;color:#5c6376;font-size:11.5px;margin-top:40px;line-height:1.9}
-@media(max-width:620px){
+@media(max-width:640px){
   .modal{grid-template-columns:1fr}
-  .modal .left{border-right:0;border-bottom:1px solid var(--line);padding:20px}
-  .modal .left img{width:140px;height:140px}
+  .modal .left{border-right:0;border-bottom:1px solid var(--line);padding:18px}
   h1{font-size:22px}
 }
 </style>
@@ -129,7 +128,7 @@ footer{text-align:center;color:#5c6376;font-size:11.5px;margin-top:40px;line-hei
 
   <section class="gacha">
     <h2>积分抽卡</h2>
-    <p>单抽消耗 60 积分 · 十连保底至少一张 SR · 抽到的都是真能吃的东西</p>
+    <p>单抽 60 积分 · 十连保底至少一张 SR · 抽到的都是真能吃的东西</p>
     <button class="btn" id="pull10">十连抽</button>
     <button class="btn ghost" id="pull1" style="margin-left:8px">单抽</button>
     <div class="pull-out" id="out"></div>
@@ -145,15 +144,180 @@ footer{text-align:center;color:#5c6376;font-size:11.5px;margin-top:40px;line-hei
   </footer>
 </div>
 
-<div class="mask" id="mask">
-  <div class="modal" id="modal" style="position:relative"></div>
-</div>
+<div class="mask" id="mask"><div class="modal" id="modal"></div></div>
 
 <script>
 const DATA = __DATA__;
 const RARITY_COLOR = {SSR:"#e8b64c",SR:"#9d7ae0",R:"#4a8fe0",N:"#6b7280"};
+const STAR = {SSR:5, SR:4, R:3, N:2};
 const cards = DATA.cards;
 
+function rgba(hex, a){
+  const n = parseInt(hex.slice(1),16);
+  return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;
+}
+
+/* ===== 角色立绘：由元素 / 职业 / 品名程序化生成，无外部图片 ===== */
+const PALETTE = {
+  炎:{hair:"#E0562C",hair2:"#A83518",trim:"#FF9A4D",skin:"#FFE3D0",glow:"#FF8A4C"},
+  风:{hair:"#25A97E",hair2:"#16785A",trim:"#7FE3BE",skin:"#FFE3D0",glow:"#5FE0B0"},
+  水:{hair:"#3E8FE0",hair2:"#2568AC",trim:"#8FC6F5",skin:"#FFE3D0",glow:"#6FB8F5"},
+  草:{hair:"#6BA32E",hair2:"#4C7A1C",trim:"#C0E37E",skin:"#FFE3D0",glow:"#A6DC5A"},
+  冰:{hair:"#4FC3B4",hair2:"#2F9689",trim:"#B0EEE6",skin:"#FFE3D0",glow:"#8FE8DC"},
+  暗:{hair:"#6A5CC4",hair2:"#473C93",trim:"#B4A9F0",skin:"#FFE3D0",glow:"#9C8FF0"},
+  光:{hair:"#D99A2B",hair2:"#A87318",trim:"#FFDC7E",skin:"#FFE3D0",glow:"#FFD466"},
+  雷:{hair:"#D4537E",hair2:"#A03458",trim:"#F49CBB",skin:"#FFE3D0",glow:"#F07AA0"}
+};
+const UNIFORM = "#242A36", UNIFORM2 = "#333A49";
+
+function foodAccent(name, c){
+  const n = name || "";
+  const bun = `<g><ellipse cx="0" cy="-6" rx="13" ry="6.5" fill="#E8A34A"/>
+      <rect x="-13" y="-3" width="26" height="5" rx="2.5" fill="#7FC24A"/>
+      <rect x="-12" y="1" width="24" height="4.5" rx="2" fill="#8A4B2A"/>
+      <ellipse cx="0" cy="8" rx="12" ry="5" fill="#E8A34A"/>
+      <circle cx="-6" cy="-7" r="1.1" fill="#FFF3D6"/><circle cx="2" cy="-8" r="1.1" fill="#FFF3D6"/>
+      <circle cx="8" cy="-5.5" r="1.1" fill="#FFF3D6"/></g>`;
+  const fries = `<g><rect x="-10" y="-14" width="4" height="14" rx="1.5" fill="#F7C948"/>
+      <rect x="-4" y="-17" width="4" height="17" rx="1.5" fill="#F7C948"/>
+      <rect x="2" y="-13" width="4" height="13" rx="1.5" fill="#F7C948"/>
+      <rect x="7" y="-16" width="4" height="16" rx="1.5" fill="#F7C948"/>
+      <path d="M-13 -3 L13 -3 L10 10 L-10 10 Z" fill="#D8352A"/>
+      <path d="M-9 1 L9 1" stroke="#F5E6C8" stroke-width="2.5"/></g>`;
+  const drink = `<g><path d="M-8 -12 L8 -12 L6 12 L-6 12 Z" fill="#E8EDF5" opacity=".92"/>
+      <path d="M-8 -12 L8 -12 L7 -4 L-7 -4 Z" fill="#D8352A"/>
+      <rect x="2" y="-20" width="3" height="14" rx="1.5" fill="#F2F5FA" transform="rotate(12 3 -13)"/></g>`;
+  const sweet = `<g><path d="M-9 10 L-4 -10 L0 -6 L4 -10 L9 10 Z" fill="#F0A0BE"/>
+      <circle cx="0" cy="-13" r="6" fill="#FFF1F6"/><circle cx="0" cy="-13" r="2.5" fill="#E85C86"/></g>`;
+  const chicken = `<g><ellipse cx="0" cy="2" rx="11" ry="9" fill="#C77A2E"/>
+      <rect x="-2.5" y="-12" width="5" height="10" rx="2.5" fill="#F5E6C8"/></g>`;
+  const crown = `<g><path d="M-14 7 L-14 -9 L-6.5 -2.5 L0 -12 L6.5 -2.5 L14 -9 L14 7 Z" fill="#F2C044" stroke="#FFF3C4" stroke-width="1.2"/>
+      <circle cx="0" cy="-12" r="2.2" fill="#FFF8DC"/>
+      <circle cx="-6.5" cy="-3" r="1.5" fill="#FFF8DC"/><circle cx="6.5" cy="-3" r="1.5" fill="#FFF8DC"/></g>`;
+
+  if (/套餐|三件套|四件套|双人|分享|拼|随心|八件|组合|1\+1/.test(n)) return crown;
+  if (/薯/.test(n)) return fries;
+  if (/可乐|雪碧|茶|咖啡|奶|汁|纯悦|饮|怡泉|麦炫|水/.test(n)) return drink;
+  if (/冰淇淋|新地|麦旋风|派|拉明顿|阿芙|圆筒|雪冰/.test(n)) return sweet;
+  if (/翅|鸡块|鸡排|鸡球|脆汁鸡|鸡腿/.test(n)) return chicken;
+  return bun;
+}
+
+function weapon(job, c){
+  if(job==="战士") return `<g transform="translate(145,104) rotate(14)">
+    <rect x="-3" y="-6" width="6" height="60" rx="2" fill="#DCE3EF"/>
+    <rect x="-3" y="-6" width="6" height="17" fill="#F8FBFF"/>
+    <rect x="-11" y="50" width="22" height="6" rx="2" fill="${c.trim}"/>
+    <rect x="-3" y="56" width="6" height="12" rx="2" fill="#7A4A24"/></g>`;
+  if(job==="坦克") return `<g transform="translate(144,116) scale(.86)">
+    <path d="M0 -24 L22 -15 L22 10 Q0 28 0 28 Q0 28 -22 10 L-22 -15 Z" fill="${UNIFORM2}" stroke="${c.trim}" stroke-width="2.5"/>
+    <path d="M0 -13 L0 16 M-11 -3 L11 -3" stroke="${c.trim}" stroke-width="2.5" fill="none"/></g>`;
+  if(job==="法师") return `<g transform="translate(146,100) rotate(10)">
+    <rect x="-2.5" y="0" width="5" height="70" rx="2" fill="#7A4A24"/>
+    <circle cx="0" cy="-9" r="13" fill="${c.glow}" opacity=".95"/>
+    <circle cx="0" cy="-9" r="5.5" fill="#fff" opacity=".92"/></g>`;
+  if(job==="刺客") return `<g transform="translate(140,128) rotate(-18) scale(.92)">
+    <path d="M0 -6 L5 6 L3 32 L-3 32 L-5 6 Z" fill="#DCE3EF"/>
+    <rect x="-10" y="32" width="20" height="5" rx="2" fill="${c.trim}"/>
+    <rect x="-3" y="37" width="6" height="13" rx="2" fill="#6B3A22"/></g>`;
+  if(job==="牧师") return `<g transform="translate(146,94)">
+    <rect x="-2.5" y="0" width="5" height="76" rx="2" fill="#C9A24A"/>
+    <rect x="-13" y="6" width="26" height="6" rx="3" fill="${c.trim}"/>
+    <circle cx="0" cy="-7" r="8.5" fill="${c.glow}" opacity=".92"/></g>`;
+  return "";
+}
+
+/* 让每张卡长得不一样：用编号哈希决定发型 / 表情 / 发色深浅 / 配饰 */
+function hash(s){ let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))>>>0; return h; }
+function shade(hex, amt){
+  const n=parseInt(hex.slice(1),16);
+  const cl=v=>Math.max(0,Math.min(255,v));
+  const r=cl((n>>16&255)+amt), g=cl((n>>8&255)+amt), b=cl((n&255)+amt);
+  return "#"+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);
+}
+function hairBack(style, c){
+  if(style===1) return `<ellipse cx="50" cy="114" rx="14" ry="26" fill="${c.hair}"/><ellipse cx="150" cy="114" rx="14" ry="26" fill="${c.hair}"/>`;
+  if(style===3) return `<path d="M56 82c-2 40 2 64 8 82 7-22 9-50 9-74z" fill="${c.hair}"/><path d="M144 82c2 40-2 64-8 82-7-22-9-50-9-74z" fill="${c.hair}"/>`;
+  return "";
+}
+function bangs(style, c){
+  if(style===2) return `<path d="M53 80c0-23 21-40 47-40s47 17 47 40c-5-16-19-23-32-23-9 0-13 4-15 11-2-7-6-11-15-11-13 0-27 7-32 23z" fill="${c.hair}"/>`;
+  if(style===3) return `<path d="M100 40c-24 0-43 17-47 40 10-15 24-21 40-17-4 6-6 12-6 18 6-12 16-18 27-18 12 0 22 6 28 18 0-6-2-12-6-18 16-4 30 2 40 17-4-23-23-40-47-40z" fill="${c.hair}"/>`;
+  return `<path d="M100 37c-26 0-45 19-47 43 7-13 17-21 28-22-3 6-4 11-4 16 5-11 14-16 23-16s18 5 23 16c0-5-1-10-4-16 11 1 21 9 28 22-2-24-21-43-47-43z" fill="${c.hair}"/>`;
+}
+function eyes(expr, c){
+  if(expr===2) return `<path d="M74 91q9-6 18 0" stroke="#1b2230" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+    <path d="M108 91q9-6 18 0" stroke="#1b2230" stroke-width="4.2" fill="none" stroke-linecap="round"/>`;
+  const ry = expr===3 ? 13.5 : 12;
+  return `<ellipse cx="83" cy="90" rx="8.8" ry="${ry}" fill="#1b2230"/>
+    <ellipse cx="117" cy="90" rx="8.8" ry="${ry}" fill="#1b2230"/>
+    <circle cx="85.6" cy="85" r="3.8" fill="#fff"/>
+    <circle cx="119.6" cy="85" r="3.8" fill="#fff"/>
+    <circle cx="79.5" cy="95" r="2.3" fill="${c.glow}"/>
+    <circle cx="113.5" cy="95" r="2.3" fill="${c.glow}"/>`;
+}
+function mouth(expr){
+  if(expr===1) return `<ellipse cx="100" cy="109" rx="5.5" ry="6.5" fill="#8A4A3A"/><ellipse cx="100" cy="112" rx="3" ry="3.2" fill="#E07A6A"/>`;
+  if(expr===2) return `<path d="M95 109 L105 109" stroke="#8A4A3A" stroke-width="2.2" stroke-linecap="round"/>`;
+  if(expr===3) return `<ellipse cx="100" cy="109" rx="3.6" ry="4.6" fill="#8A4A3A"/>`;
+  return `<path d="M96 108c2.5 3 6 3 8 0" stroke="#8A4A3A" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+}
+
+function heroSVG(card){
+  const base = PALETTE[card.element] || PALETTE["雷"];
+  const h = hash(String(card.code));
+  const style = h % 4;
+  const expr = (h >> 2) % 4;
+  const tint = ((h >> 5) % 5 - 2) * 11;
+  const acc = (h >> 8) % 3;
+  const c = {
+    hair: shade(base.hair, tint),
+    hair2: shade(base.hair2, tint),
+    trim: base.trim, skin: base.skin, glow: base.glow
+  };
+  const ghost = card.job === "灵体";
+  const id = "g" + String(card.code).replace(/[^0-9a-zA-Z]/g,"");
+  const headband = acc===1
+    ? `<path d="M54 64q46-20 92 0" stroke="${c.trim}" stroke-width="7" fill="none" stroke-linecap="round" opacity=".95"/>` : "";
+  const earring = acc===2
+    ? `<circle cx="53" cy="104" r="3.4" fill="${c.trim}"/><circle cx="147" cy="104" r="3.4" fill="${c.trim}"/>` : "";
+  return `<svg class="hero" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg${id}" cx="50%" cy="32%" r="74%">
+      <stop offset="0%" stop-color="${c.glow}" stop-opacity=".42"/>
+      <stop offset="100%" stop-color="#0f1217" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="cl${id}"><rect width="200" height="200"/></clipPath>
+  </defs>
+  <g clip-path="url(#cl${id})" opacity="${ghost?.62:1}">
+    <rect width="200" height="200" fill="url(#bg${id})"/>
+    <circle cx="100" cy="84" r="68" fill="none" stroke="${c.glow}" stroke-width="1.2" stroke-dasharray="3 7" opacity=".5"/>
+    ${weapon(card.job, c)}
+    <path d="M62 200c0-36 17-52 38-52s38 16 38 52z" fill="${UNIFORM}"/>
+    <path d="M100 148c14 0 24 20 26 52H74c2-32 12-52 26-52z" fill="${UNIFORM2}"/>
+    <path d="M88 150 L100 168 L112 150 L104 148 L100 156 L96 148 Z" fill="${c.trim}"/>
+    <path d="M100 168 L100 200" stroke="${c.trim}" stroke-width="3" opacity=".8"/>
+    <rect x="56" y="152" width="13" height="38" rx="6.5" fill="${UNIFORM}"/>
+    <rect x="131" y="152" width="13" height="38" rx="6.5" fill="${UNIFORM}"/>
+    <circle cx="62" cy="192" r="7.5" fill="${c.skin}"/>
+    <circle cx="138" cy="192" r="7.5" fill="${c.skin}"/>
+    <rect x="91" y="130" width="18" height="18" rx="7" fill="${c.skin}"/>
+    ${hairBack(style, c)}
+    <circle cx="100" cy="84" r="47" fill="${c.skin}"/>
+    <path d="M100 37c-26 0-45 19-47 43 9-11 20-17 33-17 14 0 25 6 34 17 13 0 24 6 33 17-2-24-27-60-53-60z" fill="${c.hair2}" opacity=".5"/>
+    ${bangs(style, c)}
+    <path d="M96 38c-1-13 4-20 11-25-2 10 0 16 5 21-5 0-11 1-16 4z" fill="${c.hair}"/>
+    ${headband}
+    ${eyes(expr, c)}
+    <ellipse cx="67" cy="104" rx="7" ry="4.2" fill="#F0997B" opacity=".5"/>
+    <ellipse cx="133" cy="104" rx="7" ry="4.2" fill="#F0997B" opacity=".5"/>
+    ${mouth(expr)}
+    ${earring}
+    <g transform="translate(132,46) rotate(16)">${foodAccent(card.name, c)}</g>
+  </g></svg>`;
+}
+
+/* ===== 页面逻辑 ===== */
 document.getElementById("m-count").textContent = DATA.count;
 document.getElementById("m-ssr").textContent = DATA.byRarity.SSR;
 document.getElementById("m-sr").textContent = DATA.byRarity.SR;
@@ -192,22 +356,17 @@ function statBars(c){
   }).join("");
 }
 
-const STAR = {SSR:5, SR:4, R:3, N:2};
-function rgba(hex, a){
-  const n = parseInt(hex.slice(1),16);
-  return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;
-}
 function render(){
   const test = active==="all"?()=>true : active.startsWith("e:")?elemTest(active.slice(2))
     : (groups.find(g=>g.k===active)||groups[0]).test;
   const list = cards.filter(test);
   document.getElementById("grid").innerHTML = list.map((c,i)=>`
     <div class="card ${c.rarity}" data-i="${cards.indexOf(c)}" style="animation:pop .3s backwards;animation-delay:${Math.min(i*8,240)}ms">
-      <div class="art" style="background:radial-gradient(circle at 50% 44%,${rgba(c.elementColor,.26)},${rgba(c.elementColor,.07)} 46%,#0f1217 78%)">
+      <div class="art">
         <span class="rb ${c.rarity}">${c.rarity}</span>
         <span class="eb" style="background:${c.elementColor}">${c.element}</span>
-        <img src="${c.image}" alt="${c.name}" loading="lazy">
-        <span class="frame"></span>
+        <div class="stage">${heroSVG(c)}</div>
+        <img class="photo" src="${c.image}" alt="${c.name}" loading="lazy">
         <span class="stars" style="color:${RARITY_COLOR[c.rarity]}">${"★".repeat(STAR[c.rarity])}</span>
       </div>
       <div class="body">
@@ -220,20 +379,20 @@ function render(){
 }
 
 function openCard(c){
-  const names = {ATK:"攻击",DEF:"防御",HP:"生命",SPD:"速度",CRT:"暴击",HEAL:"治疗"};
   const n = c.nutrition;
   document.getElementById("modal").innerHTML = `
     <button class="close" onclick="closeCard()">&times;</button>
-    <div class="left" style="background:radial-gradient(circle at 50% 40%,${rgba(c.elementColor,.3)},${rgba(c.elementColor,.06)} 52%,#0f1217 82%)">
-      <img src="${c.image}" alt="${c.name}">
-      <div style="font-size:11px;color:#8b93a7;text-align:center">
-        <span class="rb ${c.rarity}" style="position:static;display:inline-block">${c.rarity}</span>
-        <span style="margin-left:6px;color:${c.elementColor};font-weight:600">${c.element}属性</span>
-      </div>
+    <div class="left" style="background:radial-gradient(circle at 50% 34%,${rgba(c.elementColor,.3)},${rgba(c.elementColor,.06)} 54%,#0f1217 84%)">
+      ${heroSVG(c)}
+      <div class="real"><img src="${c.image}" alt=""><span>实物参考</span></div>
     </div>
     <div class="right">
       <h3>${c.name}</h3>
-      <div class="mt">${c.title} · ${c.job} · No.${String(c.rank).padStart(3,"0")}</div>
+      <div class="mt">
+        <span class="rb ${c.rarity}" style="position:static;display:inline-block;vertical-align:middle">${c.rarity}</span>
+        <span style="color:${c.elementColor};font-weight:600;margin-left:6px">${c.element}属性</span>
+        <span style="margin-left:8px">${c.title} · ${c.job} · No.${String(c.rank).padStart(3,"0")}</span>
+      </div>
       <div class="bars">${statBars(c)}</div>
       <div class="quote" style="--accent:${c.elementColor}">
         「${c.skill}」<br><span style="color:#8b93a7">${c.flavor}</span>
@@ -254,8 +413,12 @@ function openCard(c){
         组成：${c.components.map(x=>x.name+(x.qty>1?"×"+x.qty:"")).join(" + ")}</div>`:""}
     </div>`;
   document.getElementById("mask").classList.add("on");
+  if(history.replaceState) history.replaceState(null,"","#card="+c.code);
 }
-function closeCard(){document.getElementById("mask").classList.remove("on");}
+function closeCard(){
+  document.getElementById("mask").classList.remove("on");
+  if(history.replaceState) history.replaceState(null,"","#");
+}
 document.getElementById("mask").onclick = e=>{if(e.target.id==="mask")closeCard();};
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCard();});
 
@@ -267,7 +430,7 @@ function roll(){
 }
 function pullOnce(forceMin){
   let rar = roll();
-  if(forceMin){ const ok = ["SSR","SR"]; if(!ok.includes(rar)) rar = "SR"; }
+  if(forceMin && !["SSR","SR"].includes(rar)) rar = "SR";
   const pool = cards.filter(c=>c.rarity===rar);
   return pool[Math.floor(Math.random()*pool.length)];
 }
@@ -278,7 +441,7 @@ function doPull(times){
   const out = document.getElementById("out");
   out.innerHTML = res.map((c,i)=>`
     <div class="mini" style="animation-delay:${i*70}ms">
-      <img src="${c.image}" title="${c.name}">
+      ${heroSVG(c)}
       <div class="rn" style="color:${RARITY_COLOR[c.rarity]}">${c.rarity}</div>
     </div>`).join("");
 }
@@ -286,6 +449,13 @@ document.getElementById("pull10").onclick = ()=>doPull(10);
 document.getElementById("pull1").onclick = ()=>doPull(1);
 
 buildFilters(); render();
+
+/* 支持 #card=编码 直接打开某张卡，便于分享 */
+if(location.hash.indexOf("#card=")===0){
+  const code = location.hash.slice(6);
+  const hit = cards.find(c=>String(c.code)===code);
+  if(hit) openCard(hit);
+}
 </script>
 </body>
 </html>
