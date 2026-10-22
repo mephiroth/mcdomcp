@@ -7,7 +7,9 @@
 
 ![麦门幻境图鉴](docs/preview.png)
 
-> 开启 GitHub Pages（Settings → Pages → 选 `docs/`）后可直接在线试玩：卡牌详情、元素筛选、十连抽。
+> **▶ 在线试玩：https://mephiroth.github.io/mcdomcp/** —— 85 张卡牌图鉴、元素筛选、卡牌详情、十连抽。
+>
+> 也可以直接把仓库拉到本地，双击 `docs/index.html` 打开，无需任何依赖。
 
 ---
 
@@ -161,7 +163,7 @@ python src/render.py
 
 ### 4. 打开图鉴
 
-直接双击 `docs/index.html`，或推到 GitHub 后在 Settings → Pages 里选 `docs/` 目录。
+直接双击 `docs/index.html`，或访问在线版 **https://mephiroth.github.io/mcdomcp/**。
 
 ---
 
