@@ -42,7 +42,7 @@ h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-cli
 .btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);font-weight:500}
 .pull-out{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px;min-height:4px}
 .pull-out .mini{width:64px;text-align:center;animation:pop .35s backwards}
-.pull-out .mini svg{width:64px;height:64px;border-radius:8px;background:#0a0c10}
+.pull-out .mini svg,.pull-out .mini img{width:64px;height:64px;border-radius:8px;background:#0a0c10;object-fit:contain}
 .pull-out .mini .rn{font-size:10px;margin-top:3px;font-weight:700}
 @keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
 
@@ -53,11 +53,9 @@ h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-cli
 .card .art{position:relative;height:196px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .card .art .stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .card .art svg.hero{width:100%;height:100%;display:block}
-.card .art .photo{width:100%;height:100%;object-fit:contain;padding:14px;display:none}
-.card.show-photo .art .stage{display:none}
-.card.show-photo .art .photo{display:block}
+.card .art img.hero-img{width:100%;height:100%;object-fit:contain;display:block}
 .card .art::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(to top,#171a21 0%,transparent 36%);z-index:1;pointer-events:none}
+  background:linear-gradient(to top,rgba(23,26,33,.92) 0%,rgba(23,26,33,.35) 9%,transparent 20%);z-index:1;pointer-events:none}
 .rb{position:absolute;top:8px;left:8px;font-size:10px;font-weight:800;letter-spacing:.6px;
   padding:2px 7px;border-radius:5px;z-index:3}
 .eb{position:absolute;top:8px;right:8px;width:23px;height:23px;border-radius:50%;z-index:3;
@@ -87,6 +85,7 @@ h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-cli
 .modal .left{padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:10px;border-right:1px solid var(--line)}
 .modal .left svg.hero{width:100%;height:auto;border-radius:12px}
+.modal .left img.hero-img{width:100%;height:auto;display:block}
 .modal .left .real{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
 .modal .left .real img{width:44px;height:44px;object-fit:contain;background:#0a0c10;border-radius:8px;padding:3px}
 .modal .right{padding:24px 26px 26px}
@@ -96,7 +95,8 @@ h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-cli
 .bar{display:grid;grid-template-columns:44px 1fr 38px;align-items:center;gap:9px;margin-bottom:7px;font-size:12px}
 .bar .k{color:var(--muted)}
 .bar .track{height:6px;background:#262b36;border-radius:3px;overflow:hidden}
-.bar .fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#4a8fe0,#7db3f0)}
+.bar .fill{display:block;height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--sc,#4a8fe0),color-mix(in srgb,var(--sc,#4a8fe0) 45%,#fff))}
 .bar .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .quote{background:var(--panel2);border-left:2px solid var(--accent,#4a8fe0);border-radius:0 8px 8px 0;
   padding:10px 13px;font-size:12.5px;color:#c3cadb;margin:14px 0}
@@ -317,6 +317,12 @@ function heroSVG(card){
   </g></svg>`;
 }
 
+/* 有 AI 立绘就用立绘，没有就回退到程序化 SVG，保证任何一张卡都不会开天窗 */
+function heroArt(card){
+  if(card.art) return `<img class="hero-img" src="${card.art}" alt="${card.name}" loading="lazy">`;
+  return heroSVG(card);
+}
+
 /* ===== 页面逻辑 ===== */
 document.getElementById("m-count").textContent = DATA.count;
 document.getElementById("m-ssr").textContent = DATA.byRarity.SSR;
@@ -348,12 +354,12 @@ function buildFilters(){
 
 function statBars(c){
   const names = {ATK:"攻击",DEF:"防御",HP:"生命",SPD:"速度",CRT:"暴击",HEAL:"治疗"};
-  return Object.entries(c.stats).map(([k,v])=>{
+  return `<div class="bars" style="--sc:${c.elementColor}">` + Object.entries(c.stats).map(([k,v])=>{
     const pct = Math.max(2, Math.min(100, v/999*100));
     return `<div class="bar"><span class="k">${names[k]}</span>
       <span class="track"><span class="fill" style="width:${pct}%"></span></span>
       <span class="v">${v}</span></div>`;
-  }).join("");
+  }).join("") + `</div>`;
 }
 
 function render(){
@@ -365,8 +371,7 @@ function render(){
       <div class="art">
         <span class="rb ${c.rarity}">${c.rarity}</span>
         <span class="eb" style="background:${c.elementColor}">${c.element}</span>
-        <div class="stage">${heroSVG(c)}</div>
-        <img class="photo" src="${c.image}" alt="${c.name}" loading="lazy">
+        <div class="stage">${heroArt(c)}</div>
         <span class="stars" style="color:${RARITY_COLOR[c.rarity]}">${"★".repeat(STAR[c.rarity])}</span>
       </div>
       <div class="body">
@@ -383,7 +388,7 @@ function openCard(c){
   document.getElementById("modal").innerHTML = `
     <button class="close" onclick="closeCard()">&times;</button>
     <div class="left" style="background:radial-gradient(circle at 50% 34%,${rgba(c.elementColor,.3)},${rgba(c.elementColor,.06)} 54%,#0f1217 84%)">
-      ${heroSVG(c)}
+      ${heroArt(c)}
       <div class="real"><img src="${c.image}" alt=""><span>实物参考</span></div>
     </div>
     <div class="right">
@@ -393,7 +398,7 @@ function openCard(c){
         <span style="color:${c.elementColor};font-weight:600;margin-left:6px">${c.element}属性</span>
         <span style="margin-left:8px">${c.title} · ${c.job} · No.${String(c.rank).padStart(3,"0")}</span>
       </div>
-      <div class="bars">${statBars(c)}</div>
+      ${statBars(c)}
       <div class="quote" style="--accent:${c.elementColor}">
         「${c.skill}」<br><span style="color:#8b93a7">${c.flavor}</span>
       </div>
@@ -441,7 +446,7 @@ function doPull(times){
   const out = document.getElementById("out");
   out.innerHTML = res.map((c,i)=>`
     <div class="mini" style="animation-delay:${i*70}ms">
-      ${heroSVG(c)}
+      ${heroArt(c)}
       <div class="rn" style="color:${RARITY_COLOR[c.rarity]}">${c.rarity}</div>
     </div>`).join("");
 }

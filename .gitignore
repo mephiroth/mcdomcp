@@ -14,3 +14,7 @@ venv/
 .idea/
 .DS_Store
 Thumbs.db
+
+# 生成过程中的缓存（参考图、临时截图）
+.cache/
+.tmpimg/

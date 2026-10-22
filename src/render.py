@@ -19,6 +19,17 @@ def main() -> None:
     raw = json.loads((DATA / "roster_raw.json").read_text(encoding="utf-8"))
     tpl = (Path(__file__).resolve().parent / "template.html").read_text(encoding="utf-8")
 
+    art_dir = DOCS / "art"
+    cards = []
+    with_art = 0
+    for c in roster["cards"]:
+        c = dict(c)
+        png = art_dir / f"{c['code']}.png"
+        if png.exists():
+            c["art"] = f"art/{c['code']}.png"
+            with_art += 1
+        cards.append(c)
+
     payload = {
         "store": roster["store"],
         "count": roster["count"],
@@ -27,7 +38,7 @@ def main() -> None:
         "byElement": roster["byElement"],
         "menuTotal": raw["count"],
         "excludedToys": len(raw.get("excluded", [])),
-        "cards": roster["cards"],
+        "cards": cards,
     }
     html = tpl.replace("__DATA__", json.dumps(payload, ensure_ascii=False, separators=(",", ":")))
 
@@ -37,7 +48,7 @@ def main() -> None:
     pending = raw["count"] - roster["count"]
     print(
         f"已生成 {out}  ({len(html)/1024:.0f} KB, {roster['count']} 张卡, "
-        f"另有 {pending} 项未入池)"
+        f"{with_art} 张有 AI 立绘, 另有 {pending} 项未入池)"
     )
 
 
