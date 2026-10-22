@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>麦门幻境 · 餐品图鉴</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e1014; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
+  --text:#e8eaf0; --muted:#8b93a7; --gold:#e8b64c; --purple:#9d7ae0;
+  --blue:#4a8fe0; --gray:#6b7280;
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px 80px}
+
+header{padding:44px 0 26px;text-align:center;position:relative}
+h1{font-size:30px;font-weight:700;letter-spacing:2px}
+h1 span{background:linear-gradient(90deg,#e8b64c,#f4d78a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);font-size:13px;margin-top:8px}
+.sub code{background:var(--panel2);padding:1px 5px;border-radius:4px;font-size:12px;color:#b8c0d4}
+
+.meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:12px;color:var(--muted)}
+.chip b{color:var(--text);font-weight:600}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:26px 0 22px}
+.f{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:7px 14px;font-size:13px;cursor:pointer;transition:.15s;font-family:inherit}
+.f:hover{border-color:#3d4454;color:var(--text)}
+.f.on{background:#2a2f3a;border-color:#4a5163;color:#fff}
+.f .n{opacity:.55;font-size:11px;margin-left:4px}
+
+.gacha{background:linear-gradient(135deg,#1a1d26,#232735);border:1px solid var(--line);
+  border-radius:14px;padding:22px;margin-bottom:30px;text-align:center}
+.gacha h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.gacha p{font-size:12px;color:var(--muted);margin-bottom:16px}
+.btn{background:linear-gradient(135deg,#e8b64c,#d19a2e);color:#1a1200;border:0;border-radius:9px;
+  padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+.btn:hover{filter:brightness(1.1)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);font-weight:500}
+.pull-out{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px;min-height:4px}
+.pull-out .mini{width:66px;text-align:center;animation:pop .35s backwards}
+.pull-out .mini img{width:66px;height:66px;object-fit:contain;background:#0a0c10;border-radius:8px;padding:4px}
+.pull-out .mini .rn{font-size:10px;margin-top:3px;font-weight:700}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;
+  cursor:pointer;transition:transform .16s,border-color .16s;position:relative}
+.card:hover{transform:translateY(-4px);border-color:#4a5163}
+.card .art{position:relative;height:158px;background:radial-gradient(circle at 50% 42%,#262b36,#12151b);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .2s}
+.card .art img{width:132px;height:132px;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));
+  transition:transform .2s;position:relative;z-index:1}
+.card:hover .art img{transform:scale(1.06)}
+.card .art::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,#171a21 2%,transparent 42%);z-index:1;pointer-events:none}
+.card .frame{position:absolute;inset:6px;border:1px solid rgba(255,255,255,.07);border-radius:8px;
+  pointer-events:none;z-index:2}
+.stars{position:absolute;bottom:7px;left:9px;font-size:9px;letter-spacing:1px;z-index:3;opacity:.9}
+.rb{position:absolute;top:8px;left:8px;font-size:10px;font-weight:800;letter-spacing:.6px;
+  padding:2px 7px;border-radius:5px;z-index:2}
+.eb{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;z-index:2;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.card .body{padding:11px 12px 13px;position:relative;z-index:2}
+.nm{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl{font-size:11px;color:var(--muted);margin-top:2px}
+.pw{display:flex;align-items:baseline;gap:5px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}
+.pw .v{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+.pw .l{font-size:10px;color:var(--muted)}
+
+.card.SSR{border-color:rgba(232,182,76,.42);box-shadow:0 0 0 1px rgba(232,182,76,.14),0 6px 22px -12px rgba(232,182,76,.5)}
+.card.SR{border-color:rgba(157,122,224,.36)}
+.card.R{border-color:rgba(74,143,224,.28)}
+.rb.SSR{background:linear-gradient(135deg,#e8b64c,#f6d894);color:#241a00}
+.rb.SR{background:linear-gradient(135deg,#9d7ae0,#c0a5f0);color:#150a2a}
+.rb.R{background:linear-gradient(135deg,#4a8fe0,#7db3f0);color:#04121f}
+.rb.N{background:#3a404d;color:#b9c0cf}
+
+.mask{position:fixed;inset:0;background:rgba(6,7,10,.82);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.mask.on{display:flex}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:760px;width:100%;
+  max-height:92vh;overflow:auto;display:grid;grid-template-columns:250px 1fr}
+.modal .left{background:radial-gradient(circle at 50% 40%,#262b36,#0f1217);padding:26px;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:12px;border-right:1px solid var(--line)}
+.modal .left img{width:190px;height:190px;object-fit:contain;filter:drop-shadow(0 10px 26px rgba(0,0,0,.6))}
+.modal .right{padding:24px 26px 26px}
+.modal h3{font-size:20px;font-weight:700}
+.modal .mt{font-size:12px;color:var(--muted);margin-top:4px}
+.bars{margin:16px 0 14px}
+.bar{display:grid;grid-template-columns:44px 1fr 38px;align-items:center;gap:9px;margin-bottom:7px;font-size:12px}
+.bar .k{color:var(--muted)}
+.bar .track{height:6px;background:#262b36;border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#4a8fe0,#7db3f0)}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.quote{background:var(--panel2);border-left:2px solid var(--accent,#4a8fe0);border-radius:0 8px 8px 0;
+  padding:10px 13px;font-size:12.5px;color:#c3cadb;margin:14px 0}
+.kv{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 14px;font-size:12px;margin-top:12px}
+.kv div{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding-bottom:5px}
+.kv .k{color:var(--muted)}
+.kv .v{font-variant-numeric:tabular-nums}
+.close{position:absolute;top:14px;right:18px;background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer}
+footer{text-align:center;color:#5c6376;font-size:11.5px;margin-top:40px;line-height:1.9}
+@media(max-width:620px){
+  .modal{grid-template-columns:1fr}
+  .modal .left{border-right:0;border-bottom:1px solid var(--line);padding:20px}
+  .modal .left img{width:140px;height:140px}
+  h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>麦门幻境 · <span>餐品图鉴</span></h1>
+    <div class="sub">每一张卡的六维，都来自麦当劳官方营养表的真实数字 —— 没有一个是手调的</div>
+    <div class="meta">
+      <div class="chip">卡池 <b id="m-count">0</b> 张</div>
+      <div class="chip">SSR <b id="m-ssr">0</b> · SR <b id="m-sr">0</b></div>
+      <div class="chip">数据源 <code>mcd-mcp</code></div>
+      <div class="chip" id="m-store">门店</div>
+    </div>
+  </header>
+
+  <section class="gacha">
+    <h2>积分抽卡</h2>
+    <p>单抽消耗 60 积分 · 十连保底至少一张 SR · 抽到的都是真能吃的东西</p>
+    <button class="btn" id="pull10">十连抽</button>
+    <button class="btn ghost" id="pull1" style="margin-left:8px">单抽</button>
+    <div class="pull-out" id="out"></div>
+  </section>
+
+  <div class="toolbar" id="filters"></div>
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    本项目参加麦当劳程序员创意开发大赛，非麦当劳官方产品。<br>
+    菜单共 <b id="m-total">0</b> 项，其中 <b id="m-pending">0</b> 项因官方营养表未收录新品（龙焰系列、心形薯饼等）<b>未进入卡池，不做估算</b>。<br>
+    营养数据来自 mcd-mcp <code>list-nutrition-foods</code>，菜单与价格来自 <code>query-meals</code> / <code>query-meal-detail</code>。
+  </footer>
+</div>
+
+<div class="mask" id="mask">
+  <div class="modal" id="modal" style="position:relative"></div>
+</div>
+
+<script>
+const DATA = __DATA__;
+const RARITY_COLOR = {SSR:"#e8b64c",SR:"#9d7ae0",R:"#4a8fe0",N:"#6b7280"};
+const cards = DATA.cards;
+
+document.getElementById("m-count").textContent = DATA.count;
+document.getElementById("m-ssr").textContent = DATA.byRarity.SSR;
+document.getElementById("m-sr").textContent = DATA.byRarity.SR;
+document.getElementById("m-store").textContent = DATA.store.storeName.replace("麦当劳","");
+document.getElementById("m-total").textContent = DATA.menuTotal;
+document.getElementById("m-pending").textContent = DATA.menuTotal - DATA.count;
+
+const groups = [
+  {k:"all", label:"全部", test:()=>true},
+  {k:"SSR", label:"SSR", test:c=>c.rarity==="SSR"},
+  {k:"SR", label:"SR", test:c=>c.rarity==="SR"},
+  {k:"R", label:"R", test:c=>c.rarity==="R"},
+  {k:"N", label:"N", test:c=>c.rarity==="N"},
+];
+const elems = ["炎","风","水","草","冰","暗","光","雷"];
+const elemTest = e => c => c.element===e;
+
+let active = "all";
+const filters = document.getElementById("filters");
+function buildFilters(){
+  const all = groups.map(g=>({...g,n:cards.filter(g.test).length}))
+    .concat(elems.map(e=>({k:"e:"+e,label:e,test:elemTest(e),n:cards.filter(elemTest(e)).length})));
+  filters.innerHTML = all.map(f=>
+    `<button class="f${active===f.k?" on":""}" data-k="${f.k}">${f.label}<span class="n">${f.n}</span></button>`
+  ).join("");
+  filters.querySelectorAll(".f").forEach(b=>b.onclick=()=>{active=b.dataset.k;render();buildFilters();});
+}
+
+function statBars(c){
+  const names = {ATK:"攻击",DEF:"防御",HP:"生命",SPD:"速度",CRT:"暴击",HEAL:"治疗"};
+  return Object.entries(c.stats).map(([k,v])=>{
+    const pct = Math.max(2, Math.min(100, v/999*100));
+    return `<div class="bar"><span class="k">${names[k]}</span>
+      <span class="track"><span class="fill" style="width:${pct}%"></span></span>
+      <span class="v">${v}</span></div>`;
+  }).join("");
+}
+
+const STAR = {SSR:5, SR:4, R:3, N:2};
+function rgba(hex, a){
+  const n = parseInt(hex.slice(1),16);
+  return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;
+}
+function render(){
+  const test = active==="all"?()=>true : active.startsWith("e:")?elemTest(active.slice(2))
+    : (groups.find(g=>g.k===active)||groups[0]).test;
+  const list = cards.filter(test);
+  document.getElementById("grid").innerHTML = list.map((c,i)=>`
+    <div class="card ${c.rarity}" data-i="${cards.indexOf(c)}" style="animation:pop .3s backwards;animation-delay:${Math.min(i*8,240)}ms">
+      <div class="art" style="background:radial-gradient(circle at 50% 44%,${rgba(c.elementColor,.26)},${rgba(c.elementColor,.07)} 46%,#0f1217 78%)">
+        <span class="rb ${c.rarity}">${c.rarity}</span>
+        <span class="eb" style="background:${c.elementColor}">${c.element}</span>
+        <img src="${c.image}" alt="${c.name}" loading="lazy">
+        <span class="frame"></span>
+        <span class="stars" style="color:${RARITY_COLOR[c.rarity]}">${"★".repeat(STAR[c.rarity])}</span>
+      </div>
+      <div class="body">
+        <div class="nm">${c.name}</div>
+        <div class="tl">${c.title} · ${c.job}</div>
+        <div class="pw"><span class="v" style="color:${RARITY_COLOR[c.rarity]}">${c.power}</span><span class="l">战力</span></div>
+      </div>
+    </div>`).join("");
+  document.querySelectorAll(".card").forEach(el=>el.onclick=()=>openCard(cards[+el.dataset.i]));
+}
+
+function openCard(c){
+  const names = {ATK:"攻击",DEF:"防御",HP:"生命",SPD:"速度",CRT:"暴击",HEAL:"治疗"};
+  const n = c.nutrition;
+  document.getElementById("modal").innerHTML = `
+    <button class="close" onclick="closeCard()">&times;</button>
+    <div class="left" style="background:radial-gradient(circle at 50% 40%,${rgba(c.elementColor,.3)},${rgba(c.elementColor,.06)} 52%,#0f1217 82%)">
+      <img src="${c.image}" alt="${c.name}">
+      <div style="font-size:11px;color:#8b93a7;text-align:center">
+        <span class="rb ${c.rarity}" style="position:static;display:inline-block">${c.rarity}</span>
+        <span style="margin-left:6px;color:${c.elementColor};font-weight:600">${c.element}属性</span>
+      </div>
+    </div>
+    <div class="right">
+      <h3>${c.name}</h3>
+      <div class="mt">${c.title} · ${c.job} · No.${String(c.rank).padStart(3,"0")}</div>
+      <div class="bars">${statBars(c)}</div>
+      <div class="quote" style="--accent:${c.elementColor}">
+        「${c.skill}」<br><span style="color:#8b93a7">${c.flavor}</span>
+      </div>
+      <div class="kv">
+        <div><span class="k">战力</span><span class="v" style="color:${RARITY_COLOR[c.rarity]};font-weight:700">${c.power}</span></div>
+        <div><span class="k">售价</span><span class="v">¥${c.price}</span></div>
+        <div><span class="k">能量</span><span class="v">${n.kcal} kcal</span></div>
+        <div><span class="k">蛋白质</span><span class="v">${n.protein} g</span></div>
+        <div><span class="k">脂肪</span><span class="v">${n.fat} g</span></div>
+        <div><span class="k">碳水</span><span class="v">${n.carb} g</span></div>
+        <div><span class="k">钠</span><span class="v">${n.sodium} mg</span></div>
+        <div><span class="k">钙</span><span class="v">${n.calcium} mg</span></div>
+        <div><span class="k">每元战力</span><span class="v">${c.powerPerYuan}</span></div>
+        <div><span class="k">类型</span><span class="v">${c.isCombo?"套餐":"单品"}</span></div>
+      </div>
+      ${c.components && c.components.length>1?`<div style="margin-top:14px;font-size:12px;color:#8b93a7">
+        组成：${c.components.map(x=>x.name+(x.qty>1?"×"+x.qty:"")).join(" + ")}</div>`:""}
+    </div>`;
+  document.getElementById("mask").classList.add("on");
+}
+function closeCard(){document.getElementById("mask").classList.remove("on");}
+document.getElementById("mask").onclick = e=>{if(e.target.id==="mask")closeCard();};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCard();});
+
+const RATES = [["SSR",0.03],["SR",0.12],["R",0.35],["N",0.50]];
+function roll(){
+  let r = Math.random(), acc = 0;
+  for(const [k,p] of RATES){ acc += p; if(r < acc) return k; }
+  return "N";
+}
+function pullOnce(forceMin){
+  let rar = roll();
+  if(forceMin){ const ok = ["SSR","SR"]; if(!ok.includes(rar)) rar = "SR"; }
+  const pool = cards.filter(c=>c.rarity===rar);
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function doPull(times){
+  const res = [];
+  for(let i=0;i<times;i++) res.push(pullOnce(times>1 && i===times-1));
+  if(times>1 && !res.some(c=>c.rarity==="SSR"||c.rarity==="SR")) res[times-1]=pullOnce(true);
+  const out = document.getElementById("out");
+  out.innerHTML = res.map((c,i)=>`
+    <div class="mini" style="animation-delay:${i*70}ms">
+      <img src="${c.image}" title="${c.name}">
+      <div class="rn" style="color:${RARITY_COLOR[c.rarity]}">${c.rarity}</div>
+    </div>`).join("");
+}
+document.getElementById("pull10").onclick = ()=>doPull(10);
+document.getElementById("pull1").onclick = ()=>doPull(1);
+
+buildFilters(); render();
+</script>
+</body>
+</html>
